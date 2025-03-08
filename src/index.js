@@ -2,12 +2,19 @@ import express, { request, response } from 'express';
 import { PORT } from './constants/envs.mjs';
 import { logger, unknownEndpoint } from './middlewares/common.middlewares.mjs';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 app.use(express.json());
 app.use(logger);
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, '../dist')));
 
 const persons = [
   {
@@ -31,8 +38,6 @@ const persons = [
     number: '39-23-6423122',
   },
 ];
-
-app.use(express.static('dist'));
 
 app.get('/info', (req = request, res = response) => {
   res.send(`
@@ -91,6 +96,10 @@ app.delete('/api/persons/:id', (req = request, res = response) => {
 });
 
 app.use(unknownEndpoint);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
