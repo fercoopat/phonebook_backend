@@ -32,6 +32,8 @@ const persons = [
   },
 ];
 
+app.use(express.static('dist'));
+
 app.get('/info', (req = request, res = response) => {
   res.send(`
     <p>Phonebook has info for ${persons?.length} people</p>

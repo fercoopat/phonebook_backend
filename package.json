@@ -2,7 +2,7 @@
   "name": "express-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
@@ -26,6 +26,10 @@
     "extends": [
       "./node_modules/standard/eslintrc.json"
     ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
     "rules": {
       "semi": "off",
       "comma-dangle": "off"
